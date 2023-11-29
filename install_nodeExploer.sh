@@ -43,7 +43,7 @@ sudo systemctl enable node_exporter
 sudo password=`openssl rand -base64 32`
 sudo passwordHashed=`echo ${password} | htpasswd -inBC 10 "" | tr -d ':\n'`
 
-sudo cat << EOF >> /etc/prometheus_node_exporter/configuration.yml
+sudo cat << EOF > /etc/prometheus_node_exporter/configuration.yml
 basic_auth_users:
   prometheus: ${passwordHashed}
 
