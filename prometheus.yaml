@@ -9,6 +9,22 @@ scrape_configs:
       - targets: ["localhost:9090"]
         labels:
           grupo: "Prometheus"
+
+  - job_name: "my-test"
+    static_configs:
+      - targets: [ "localhost:9100" ]
+    basic_auth:
+      username: "readmetric"
+      password: "Devomudarsenha"
+    scheme: https
+    tls_config:
+      insecure_skip_verify: true
+    # Relabeling "instance" to remove the ":9100" part
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        regex: '([^:]+)(:[0-9]+)?'
+        replacement: '${1}
           
   
 
