@@ -4,7 +4,7 @@ volumes:
     grafana_data: {}
 networks:
   prometheus_network:
-    driver: bridge
+    driver: bind
 services:
   prometheus:
     image: prom/prometheus:v2.48.0
@@ -16,8 +16,6 @@ services:
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
-      - '--storage.tsdb.retention=35d'
-      - '--web.enable-lifecycle'
     networks:
       - prometheus_network
     restart: always

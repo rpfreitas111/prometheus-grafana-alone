@@ -1,7 +1,7 @@
 global:
-  scrape_interval: 15s
-  scrape_timeout: 5s
-  evaluation_interval: 15s
+  scrape_interval: 25s
+  scrape_timeout: 10s
+  evaluation_interval: 25s
   
 scrape_configs:
   - job_name: prometheus
@@ -9,13 +9,14 @@ scrape_configs:
       - targets: ["localhost:9090"]
         labels:
           grupo: "Prometheus"
-
-  - job_name: "my-test"
+  - job_name: "Myservers"
     static_configs:
-      - targets: [ "localhost:9100" ]
+      - targets: ["localhost:9100"]
+        labels:
+          grupo: "vm-azure"
     basic_auth:
-      username: "readmetric"
-      password: "Devomudarsenha"
+      username: "prometheus"
+      password: "jM9ijHfrvhoPfJpqos3nTisjQxaHrVrrO081h5aYY6c="
     scheme: https
     tls_config:
       insecure_skip_verify: true
@@ -24,7 +25,4 @@ scrape_configs:
       - source_labels: [__address__]
         target_label: instance
         regex: '([^:]+)(:[0-9]+)?'
-        replacement: '${1}
-          
-  
-
+        replacement: '${1}'
