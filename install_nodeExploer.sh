@@ -22,7 +22,7 @@ After=network.target
 User=node_exporter
 Group=node_exporter
 Type=simple
-ExecStart=/usr/local/bin/node_exporter --web.config=/etc/prometheus_node_exporter/configuration.yml
+ExecStart=/usr/local/bin/node_exporter --web.config.file=/etc/prometheus_node_exporter/configuration.yml
 
 [Install]
 WantedBy=multi-user.target
@@ -33,11 +33,18 @@ sudo mkdir -p /etc/prometheus_node_exporter/
 sudo touch /etc/prometheus_node_exporter/configuration.yml
 sudo chmod 700 /etc/prometheus_node_exporter
 sudo chmod 600 /etc/prometheus_node_exporter/*
-sudo chown -r node_exporter:node_exporter /etc/prometheus_node_exporter
+sudo chown -R node_exporter:node_exporter /etc/prometheus_node_exporter
 
 
 sudo systemctl daemon-reload
 sudo systemctl enable node_exporter
+
+#  Include username and password to access node_exporter
+sudo cat << EOF >> /etc/prometheus_node_exporter/configuration.yml
+basic_auth_users:
+  prometheus: Devomudarsenha
+
+EOF
 
 # Start the node_exporter daemon and check its status
 sudo systemctl start node_exporter
