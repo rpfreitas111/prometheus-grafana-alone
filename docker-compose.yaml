@@ -23,14 +23,14 @@ services:
     restart: always
 
   grafana:
-    image: grafana/grafana:10.2.2
+    image: grafana/grafana:9.5.13
     ports:
       - "80:3000"
     depends_on:
       - prometheus
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=EuvouTrocar
-      - GF_SECURITY_ADMIN_USER=adminstrador
+      - GF_SECURITY_ADMIN_USER=administrador
     networks:
       - prometheus_network
     volumes:
