@@ -1,0 +1,39 @@
+version: '3.9'
+volumes:
+    prometheus_data: {}
+    grafana_data: {}
+networks:
+  prometheus_network:
+    driver: bridge
+services:
+  prometheus:
+    image: prom/prometheus:v2.48.0
+    ports:
+      - "9090:9090"
+    volumes:
+      - "./prometheus.yaml:/etc/prometheus/prometheus.yml"
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention=35d'
+      - '--web.enable-lifecycle'
+    networks:
+      - prometheus_network
+    restart: always
+
+  grafana:
+    image: grafana/grafana:10.2.2
+    ports:
+      - "80:3000"
+    depends_on:
+      - prometheus
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=EuvouTrocar
+      - GF_SECURITY_ADMIN_USER=adminstrador
+    networks:
+      - prometheus_network
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - "./prometheus_ds.yaml:/etc/grafana/provisioning/datasources/prometheus_ds.yaml"
+    restart: always
