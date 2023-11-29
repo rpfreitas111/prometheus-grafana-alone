@@ -40,12 +40,17 @@ sudo systemctl daemon-reload
 sudo systemctl enable node_exporter
 
 #  Include username and password to access node_exporter
+sudo password=`openssl rand -base64 32`
+sudo passwordHashed=`echo ${password} | htpasswd -inBC 10 "" | tr -d ':\n'`
+
 sudo cat << EOF >> /etc/prometheus_node_exporter/configuration.yml
 basic_auth_users:
-  prometheus: Devomudarsenha
+  prometheus: ${passwordHashed}
 
 EOF
 
 # Start the node_exporter daemon and check its status
 sudo systemctl start node_exporter
 sudo systemctl status node_exporter
+
+echo "Clear password to keep for Prometheus Server: ${password}"
