@@ -9,9 +9,9 @@ scrape_configs:
       - targets: ["localhost:9090"]
         labels:
           grupo: "Prometheus"
-  - job_name: 'nodeEX-docker'
-    static_configs:
-      - targets: ['node-exporter:9200']
+  # - job_name: 'nodeEX-docker'
+  #   static_configs:
+  #     - targets: ['node-exporter:9200']
   - job_name: "nodeEX-install"
     static_configs:
       - targets: ["localhost:9100"]
