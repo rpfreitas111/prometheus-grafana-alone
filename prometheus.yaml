@@ -1,6 +1,6 @@
 global:
   scrape_interval: 25s
-  scrape_timeout: 10s
+  scrape_timeout: 15s
   evaluation_interval: 25s
   
 scrape_configs:
@@ -9,7 +9,10 @@ scrape_configs:
       - targets: ["localhost:9090"]
         labels:
           grupo: "Prometheus"
-  - job_name: "Myservers"
+  - job_name: 'nodeEX-docker'
+    static_configs:
+      - targets: ['node-exporter:9200']
+  - job_name: "nodeEX-install"
     static_configs:
       - targets: ["localhost:9100"]
         labels:

@@ -4,7 +4,7 @@ volumes:
     grafana_data: {}
 networks:
   prometheus_network:
-    driver: bind
+    driver: bridge
 services:
   prometheus:
     image: prom/prometheus:v2.48.0
@@ -18,7 +18,26 @@ services:
       - '--storage.tsdb.path=/prometheus'
     networks:
       - prometheus_network
+    # network_mode: "host"
     restart: always
+
+  node-exporter:
+    image: prom/node-exporter:v1.7.0
+    container_name: node-exporter-container
+    restart: unless-stopped
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    expose:
+      - 9200
+    networks:
+      - prometheus_network
 
   grafana:
     image: grafana/grafana:9.5.13
@@ -31,6 +50,7 @@ services:
       - GF_SECURITY_ADMIN_USER=administrador
     networks:
       - prometheus_network
+    # network_mode: "host"
     volumes:
       - grafana_data:/var/lib/grafana
       - "./prometheus_ds.yaml:/etc/grafana/provisioning/datasources/prometheus_ds.yaml"

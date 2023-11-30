@@ -52,5 +52,6 @@ EOF
 echo "Clear password to keep for Prometheus Server: ${password}" > ~/password_access.txt
 
 # Start the node_exporter daemon and check its status
+sudo systemctl stop node_exporter
 sudo systemctl start node_exporter
 sudo systemctl status node_exporter
