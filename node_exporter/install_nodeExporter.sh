@@ -1,7 +1,8 @@
 # Go to https://github.com/prometheus/node_exporter/releases to get the latest version number.
 node_exporter_version="1.7.0"
 node_exporter_release="linux-amd64"
-
+# install depedency
+sudo apt install apache2-utils -yq
 # Download and install node_exporter
 cd /tmp
 wget https://github.com/prometheus/node_exporter/releases/download/v${node_exporter_version}/node_exporter-${node_exporter_version}.${node_exporter_release}.tar.gz

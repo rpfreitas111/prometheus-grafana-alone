@@ -1,4 +1,5 @@
 #!/bin/bash
+username="Definir_usuario_docker_da_maquina"
 sudo apt update -yq  && \ 
 sudo apt upgrade -yq && \
 sudo apt-get install \
@@ -16,4 +17,5 @@ echo \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null && \
 sudo apt-get update -y && \
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin  -yq && \
-sudo usermod -aG docker way2admin
+sudo usermod -aG docker $username && \
+sudo timedatectl set-timezone America/Sao_Paulo

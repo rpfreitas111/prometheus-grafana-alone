@@ -20,9 +20,9 @@ scrape_configs:
     basic_auth:
       username: "prometheus"
       password: "jM9ijHfrvhoPfJpqos3nTisjQxaHrVrrO081h5aYY6c="
-    scheme: https
-    tls_config:
-      insecure_skip_verify: true
+    scheme: http
+    # tls_config:
+    #   insecure_skip_verify: true
     # Relabeling "instance" to remove the ":9100" part
     relabel_configs:
       - source_labels: [__address__]
