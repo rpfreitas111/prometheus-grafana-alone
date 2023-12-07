@@ -9,23 +9,23 @@ scrape_configs:
       - targets: ["localhost:9090"]
         labels:
           grupo: "Prometheus"
-  # - job_name: 'nodeEX-docker'
-  #   static_configs:
-  #     - targets: ['node-exporter:9200']
-  - job_name: "nodeEX-install"
+  - job_name: 'node-docker'
     static_configs:
-      - targets: ["localhost:9100"]
-        labels:
-          grupo: "vm-azure"
-    basic_auth:
-      username: "prometheus"
-      password: "jM9ijHfrvhoPfJpqos3nTisjQxaHrVrrO081h5aYY6c="
-    scheme: http
-    # tls_config:
-    #   insecure_skip_verify: true
-    # Relabeling "instance" to remove the ":9100" part
-    relabel_configs:
-      - source_labels: [__address__]
-        target_label: instance
-        regex: '([^:]+)(:[0-9]+)?'
-        replacement: '${1}'
+      - targets: ['node-exporter:9200']
+  # - job_name: "nodeEX-install"
+  #   static_configs:
+  #     - targets: ["localhost:9100"]
+  #       labels:
+  #         grupo: "vm-azure"
+  #   basic_auth:
+  #     username: "prometheus"
+  #     password: "jM9ijHfrvhoPfJpqos3nTisjQxaHrVrrO081h5aYY6c="
+  #   scheme: http
+  #   # tls_config:
+  #   #   insecure_skip_verify: true
+  #   # Relabeling "instance" to remove the ":9100" part
+  #   relabel_configs:
+  #     - source_labels: [__address__]
+  #       target_label: instance
+  #       regex: '([^:]+)(:[0-9]+)?'
+  #       replacement: '${1}'

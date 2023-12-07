@@ -16,30 +16,29 @@ services:
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
-    # networks:
-    #   - prometheus_network
-    network_mode: "host"
+    networks:
+      - prometheus_network
     restart: always
 
-  # node-exporter:
-  #   image: prom/node-exporter:v1.7.0
-  #   container_name: node-exporter-container
-  #   restart: unless-stopped
-  #   volumes:
-  #     - /proc:/host/proc:ro
-  #     - /sys:/host/sys:ro
-  #     - /:/rootfs:ro
-  #   command:
-  #     - '--path.procfs=/host/proc'
-  #     - '--path.rootfs=/rootfs'
-  #     - '--path.sysfs=/host/sys'
-  #     - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
-  #   expose:
-  #     - 9100
-  #   depends_on:
-  #     - prometheus
-  #   networks:
-  #     - prometheus_network
+  node-exporter:
+    image: prom/node-exporter:v1.7.0
+    container_name: node-exporter-container
+    restart: unless-stopped
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    expose:
+      - 9100
+    depends_on:
+      - prometheus
+    networks:
+      - prometheus_network
 
   grafana:
     image: grafana/grafana:9.5.13
@@ -50,9 +49,8 @@ services:
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=EuvouTrocar
       - GF_SECURITY_ADMIN_USER=administrador
-    # networks:
-    #   - prometheus_network
-    network_mode: "host"
+    networks:
+      - prometheus_network
     volumes:
       - grafana_data:/var/lib/grafana
       - "./prometheus_ds.yaml:/etc/grafana/provisioning/datasources/prometheus_ds.yaml"

@@ -25,7 +25,7 @@ O script irá solicitar que seja escolhido a versão, com base nas ultimas vers�
 * Mensagem no final da instalação
   * ![Alt text](pictures/image-1.png)
   
-## Recursos instalado na vm
+## Arquivos criados após a instalação
   * Criado o service do systemD com nome:
     * *node_exporter.service*
   * Criado arquivo de autenticação do prometheus em:
